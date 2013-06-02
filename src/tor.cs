@@ -123,7 +123,7 @@ namespace whore
 	    torloc = _torloc;
             controlPort = (ushort)_controlPort;
             socksPort = (ushort)_socksPort;
-            dataDirectory = "/home/matthew/Code/Whore/whore/data";//string.Format("../../whore/data/{0}", this.GetHashCode());
+            dataDirectory = string.Format("./data/{0}", this.GetHashCode());
 
 
             System.Console.WriteLine("TorInstance({0:d}) created. Socks: {1:d}", this.GetHashCode(), socksPort);
