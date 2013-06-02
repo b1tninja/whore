@@ -28,12 +28,11 @@ namespace whore
         public virtual void execute(TorInstance _tor, TaskResultHandler callback)
         {
             base.execute(callback);
-	    System.Console.WriteLine("execute");
             tor = _tor;
             while(tor == null)
                 Thread.Sleep(SLEEP_TIME);
 
-            tor.State = TorInstance.TorState.Busy;
+	    tor.State = TorInstance.TorState.Busy;
             while (tor.State != TorInstance.TorState.Busy)
                 Thread.Sleep(SLEEP_TIME);
 
@@ -87,6 +86,7 @@ namespace whore
             {
                 Debug.Print("TcpClient instance disposed.");
             }
+            proxy = factory.CreateProxyClient(ProxyType.Socks5, "127.0.0.1", socksPort);
             this.State = TorState.Ready;
         }
 
@@ -107,7 +107,7 @@ namespace whore
                 }
                 else
                 {
-                    Debug.Print(string.Format("TorInstance({0}) is in an unexpected state: ({1}->{2}).",this.GetHashCode(),state.ToString(),value.ToString()));
+                    System.Console.WriteLine(string.Format("TorInstance({0}) is in an unexpected state: ({1}->{2}).",this.GetHashCode(),state.ToString(),value.ToString()));
                    // throw new TorInvalidStateChange(); // Shouldn't happen, but lets catch the race condition if possible.
                 }
             }
@@ -149,6 +149,7 @@ namespace whore
 
             while (!torThread.IsAlive)
                 Thread.Sleep(25);
+
         }
 
         private void parseSTDOUT(object sender, DataReceivedEventArgs e)
@@ -192,8 +193,8 @@ namespace whore
             processStartInfo.RedirectStandardOutput = true;
             processStartInfo.RedirectStandardInput = true;
             processStartInfo.UseShellExecute = false;
-            processStartInfo.Arguments = string.Format("--controlPort {0} --socksPort {1} --dataDirectory {2}", controlPort, socksPort, dataDirectory);
 	    System.Console.WriteLine(string.Format("cp {0}, sp {1}, dd {2}", controlPort, socksPort, dataDirectory));
+            processStartInfo.Arguments = string.Format("--controlPort {0} --socksPort {1} --dataDirectory {2}", controlPort, socksPort, dataDirectory);
             //processStartInfo.Arguments = string.Format("--Socks5Proxy 127.0.0.1:1337 --controlPort {0} --socksPort {1} --dataDirectory {2}", controlPort, socksPort, dataDirectory);
             processStartInfo.FileName = torloc;
 

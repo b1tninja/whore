@@ -125,7 +125,6 @@ namespace whore
                 // cache question too? they're in the resource records.... 
                 // there should be a table that indicates the question (request made, the time, the flags, the response code, etc)
                 foreach(DnsTransaction.ResourceRecord rr in t.getRecords())
-//		 System.Console.WriteLine("Would add resource to DB");
                     cache(rr);
             }
             if (obj is DnsTransaction.ResourceRecord)
@@ -191,10 +190,8 @@ namespace whore
                 }
                 sql.Prepare();
                 object r = sql.ExecuteScalar();
-		System.Console.WriteLine("This Far");
                 if (r != null)
                 {
-		   System.Console.WriteLine(r);
                    lid = (uint)r;
                     sql.Parameters.Clear();
                 }

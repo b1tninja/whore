@@ -24,5 +24,4 @@ clean : $(OUT)
 	rm $(OUT)
 
 run : $(OUT) 
-	$(TORLOCATION)&
 	mono --debug $(OUT)  $(DBCONFIG) $(TORLOCATION) $(LSTSFT)
