@@ -10,7 +10,7 @@
 LSTSFT=Starksoft.Net.Proxy.dll
 TORLOCATION=`locate App/tor`
 DBCONFIG='server=127.0.0.1;userid=justin;database=whore'
-SOURCE=whore/db.cs  whore/dns.cs  whore/task.cs  whore/tor.cs  whore/whois.cs  whore/whore.cs
+SOURCE=src/db.cs  src/dns.cs  src/task.cs  src/tor.cs  src/whois.cs  src/whore.cs
 CC=mcs
 PKG=-pkg:mysql.data
 #May have to generalise the System.Data requirement.
@@ -24,4 +24,5 @@ clean : $(OUT)
 	rm $(OUT)
 
 run : $(OUT) 
-	mono --debug $(OUT)  $(DBCONFIG) $(TORLOCATION) 
+	$(TORLOCATION)&
+	mono --debug $(OUT)  $(DBCONFIG) $(TORLOCATION) $(LSTSFT)
