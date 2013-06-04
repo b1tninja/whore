@@ -59,6 +59,7 @@ namespace whore
         {
 
         }
+	//Needs implementation? 
         class TorInvalidStateChange : TorException {}
 
         public enum TorState { Bootstrapping, Ready, Busy, Error, Terminated };
