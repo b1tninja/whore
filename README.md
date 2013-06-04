@@ -24,7 +24,7 @@ The Tor executable doesn't need to be in your $PATH, just download and extract t
     mysql> CREATE USER justin;
     mysql> CREATE DATABASE whore;
 
-The file `bootstrap.sql` creates the table structure necessary for **whore** to operate. [NB: May not be exact as of current commit]
+The file `database.sql` creates the table structure necessary for **whore** to operate. [NB: May not be exact as of current commit]
 
     $ mysql -u root -p whore < bootstrap.sql
 
