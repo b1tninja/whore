@@ -32,7 +32,7 @@ namespace whore
             while(tor == null)
                 Thread.Sleep(SLEEP_TIME);
 
-            tor.State = TorInstance.TorState.Busy;
+	    tor.State = TorInstance.TorState.Busy;
             while (tor.State != TorInstance.TorState.Busy)
                 Thread.Sleep(SLEEP_TIME);
 
@@ -43,6 +43,8 @@ namespace whore
             if (e.Error != null)
             {
                 System.Console.WriteLine("Task({0}): Connection to {1} failed via TorInstance({2}).", this.GetHashCode(), this.endPoint, tor.GetHashCode());
+		System.Console.WriteLine(e.Error);
+		System.Console.Write(e.Error.StackTrace);
             }
             else
             {
@@ -65,6 +67,7 @@ namespace whore
         private UInt16 socksPort;
         private string dataDirectory;
         private string controlPassword;
+	private string torloc;
         private Thread torThread;
         ProxyClientFactory factory;
 
@@ -83,6 +86,7 @@ namespace whore
             {
                 Debug.Print("TcpClient instance disposed.");
             }
+            proxy = factory.CreateProxyClient(ProxyType.Socks5, "127.0.0.1", socksPort);
             this.State = TorState.Ready;
         }
 
@@ -103,7 +107,7 @@ namespace whore
                 }
                 else
                 {
-                    Debug.Print(string.Format("TorInstance({0}) is in an unexpected state: ({1}->{2}).",this.GetHashCode(),state.ToString(),value.ToString()));
+                    System.Console.WriteLine(string.Format("TorInstance({0}) is in an unexpected state: ({1}->{2}).",this.GetHashCode(),state.ToString(),value.ToString()));
                    // throw new TorInvalidStateChange(); // Shouldn't happen, but lets catch the race condition if possible.
                 }
             }
@@ -112,13 +116,15 @@ namespace whore
         public UInt16 SocksPort { get { return socksPort; } }
         public string DataDirectory { get { return dataDirectory; } }
 
-        public TorInstance(int _controlPort, int _socksPort, bool useExistingTorPorts = false)
+        public TorInstance(string _torloc, int _controlPort, int _socksPort, bool useExistingTorPorts = false)
         {
             // Assign member variables
             //            state = TorState.Bootstrapping;
+	    torloc = _torloc;
             controlPort = (ushort)_controlPort;
             socksPort = (ushort)_socksPort;
             dataDirectory = string.Format("./data/{0}", this.GetHashCode());
+
 
             System.Console.WriteLine("TorInstance({0:d}) created. Socks: {1:d}", this.GetHashCode(), socksPort);
 
@@ -143,6 +149,7 @@ namespace whore
 
             while (!torThread.IsAlive)
                 Thread.Sleep(25);
+
         }
 
         private void parseSTDOUT(object sender, DataReceivedEventArgs e)
@@ -186,9 +193,10 @@ namespace whore
             processStartInfo.RedirectStandardOutput = true;
             processStartInfo.RedirectStandardInput = true;
             processStartInfo.UseShellExecute = false;
+	    System.Console.WriteLine(string.Format("cp {0}, sp {1}, dd {2}", controlPort, socksPort, dataDirectory));
             processStartInfo.Arguments = string.Format("--controlPort {0} --socksPort {1} --dataDirectory {2}", controlPort, socksPort, dataDirectory);
-            //                processStartInfo.Arguments = string.Format("--Socks5Proxy 127.0.0.1:1337 --controlPort {0} --socksPort {1} --dataDirectory {2}", controlPort, socksPort, dataDirectory);
-            processStartInfo.FileName = @"C:\Program Files (x86)\Tor\tor.exe";
+            //processStartInfo.Arguments = string.Format("--Socks5Proxy 127.0.0.1:1337 --controlPort {0} --socksPort {1} --dataDirectory {2}", controlPort, socksPort, dataDirectory);
+            processStartInfo.FileName = torloc;
 
             process = new Process();
 

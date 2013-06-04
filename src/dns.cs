@@ -52,6 +52,8 @@ namespace whore
             if (nBytesRec <= 0)
             {
                 // tcp connection closing
+
+		this.tor.cleanup();
             }
             else
             {

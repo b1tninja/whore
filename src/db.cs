@@ -1,4 +1,4 @@
-﻿//todo move root hint parser into DNS Factory?
+﻿//TODO move root hint parser into DNS Factory?
 
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace whore
             }
             catch (Exception e)
             {
-                Debug.Print(e.ToString( ));
+                System.Console.WriteLine("THIS"+e.ToString());
             }
         }
         #region Dns
