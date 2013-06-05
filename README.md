@@ -65,15 +65,15 @@ Development Tasks
 ###Complete/Ongoing
 + Threads to launch multiple tor processes
 + TorTask - basic structure is there, delegate handler code could use some work
-+ DnsTask - does single queries, and capable of caching to db. Needs to be able to recurse to the delegated nameservers, till it gets an authoratative (or answer from all nameservers?). 
++ DnsTask - does single queries, and capable of caching to db. Needs to be able to recurse to the delegated nameservers, till it gets an authoratative (or answer from all nameservers?). Currently an issue to run.  
 + WhoisTask - uses cname lookup of tld.whois-servers.net, handles in-addr arpa for ipv4 and 6. Should resolve the cname with a DnsTask, not direct lookup. Does not cache to db currently.
++ Simple Client (+Server Interface), only on TCP connection at the moment, should probably move to a Tor connection. 
 
 ###Unimplemented/Wishlist
 + PortTask - Perform a port scan on the host. 
 + HttpTask 
 + HttpsTask
 + FtpTask
-+ Simple Client (+Server Interface)
 + ???
 	
 	
