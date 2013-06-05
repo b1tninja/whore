@@ -20,7 +20,6 @@ namespace whore
         public TorInstance tor;
         public DnsEndPoint endPoint;
 
-
         public TorTask()
         {
         }
