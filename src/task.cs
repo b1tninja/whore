@@ -14,6 +14,7 @@ namespace whore
     {
         public delegate void TaskResultHandler(object taskResult);
         protected TaskResultHandler callback = null;
+        protected ClientInterface owner = null;
 
         public Task()
         {
@@ -23,6 +24,16 @@ namespace whore
         {
             this.callback = callback;
             System.Console.WriteLine("Executing task {0}.", this.GetHashCode());
+        }
+
+        public virtual void setOwner(ClientInterface _owner){
+            if(owner == null){
+                owner = _owner;
+            }
+        }
+
+        public virtual ClientInterface getOwner(){
+            return owner;
         }
     }
 }

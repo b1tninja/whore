@@ -20,7 +20,6 @@ namespace whore
         public TorInstance tor;
         public DnsEndPoint endPoint;
 
-
         public TorTask()
         {
         }
@@ -59,6 +58,7 @@ namespace whore
         {
 
         }
+	//Needs implementation? 
         class TorInvalidStateChange : TorException {}
 
         public enum TorState { Bootstrapping, Ready, Busy, Error, Terminated };
