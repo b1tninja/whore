@@ -33,6 +33,9 @@ namespace whore
 
         void parseRootHints()
         {
+            //The csv path for this can't be platform-dependant. 
+            //Relative paths via System.IO.Path or System.Environment are the way
+            //forward here.
             foreach (DnsTransaction.ResourceRecord rr in readCsv(@"c:\root.csv"))
             {
                 cache(rr);
@@ -90,7 +93,7 @@ namespace whore
                 return ip.GetAddressBytes();
 
             } else {
-                return ASCIIEncoding.ASCII.GetBytes(str + (char)0);
+                return ASCIIEncoding.ASCII.GetBytes(str + ((char)0).ToString());
             }
         }
         public DnsTransaction.ResourceRecord lookup(DnsTransaction.QuestionRecord record)  {
